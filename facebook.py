@@ -29,8 +29,8 @@ KEYWORDS = ['python','java','c++','Mac','Liunx','Facebook']
 
 def login():
     browser.get('https://www.facebook.com')
-    browser.find_element_by_id('email').send_keys('wutong8773@163.com')
-    browser.find_element_by_id('pass').send_keys('wt008911wt008911')
+    browser.find_element_by_id('email').send_keys('')　# facebook邮箱
+    browser.find_element_by_id('pass').send_keys('')　# 密码
     browser.find_element_by_id('login_form').submit()
     browser.implicitly_wait(10)
 
