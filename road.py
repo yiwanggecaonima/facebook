@@ -9,7 +9,6 @@ import time
 import re
 
 class Road():
-
     def __init__(self):
         self.base_url = 'http://silkroad4n7fwsrw.onion/'
         self.conn = pymongo.MongoClient('127.0.0.1',27017)
@@ -17,7 +16,7 @@ class Road():
 
         self.chromeOptions = webdriver.ChromeOptions()
 
-        # 设置代理
+        # 设置代理　这是selenium设置代理的格式
         self.chromeOptions.add_argument("--proxy-server=socks5://127.0.0.1:9150")
         # 一定要注意，=两边不能有空格
         self.browser = webdriver.Chrome(chrome_options=self.chromeOptions)
@@ -29,7 +28,7 @@ class Road():
 
 
     def get_all(self,response):
-
+        # 登录碰到验证码
         if 'CAPTCHA' in response:
             img = r'<img src="(.*?)" />'
             img_link = re.findall(img,response)[0]
@@ -67,7 +66,8 @@ class Road():
                 self.browser.get(sub_link)
                 time.sleep(15)
                 self.get_content(self.browser.page_source)
-
+                
+     # 解析并保存到mongodb
     def get_content(self,response):
         # self.browser.get(link)
         doc = etree.HTML(response)
@@ -104,7 +104,7 @@ class Road():
                 return None
 
     def web(self):
-
+        # 这里会出现验证码，如果玩机器学习的小伙伴也可以试试用tensorflow或者sklearn进行图像识别，难度应该不大，但是过程估计不轻松
         if 'CAPTCHA' in self.browser.page_source:
             img = r'<img src="(.*?)" />'
             img_link = re.findall(img,self.browser.page_source)[0]
